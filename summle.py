@@ -13,7 +13,7 @@ def getStringEquation(x, oper, y):
 
 branches = []
 answerBranches = []
-goal = 187
+goal = 0
 end = 0
 operations = [add, subtract, multiply, divide]
 tries = 0
@@ -35,7 +35,6 @@ class Branch:
     if goal in self.selection:
       end = time.time()
       answerBranches.append(self)
-      #print(self.equations)
       found = self.equations
       return
     if self.step > limit:
@@ -63,13 +62,12 @@ class Branch:
             else:
                 del copy[val2]
             branch = Branch(copy+[operation(value1, value2)], equations = self.equations+"\n"+getStringEquation(value1, operation, value2), step = self.step + 1)
-            #print(branch.selection, val1, val2)
             tries+=1
             branch.generate()
           except Exception as e:
             print(str(e))
 
-selection = input("Numbers, seperated by commas (e.g. 1,2,3): ")
+selection = input("Options, seperated by commas (e.g. 1,2,3): ")
 selection = selection.split(",")
 for s in range(len(selection)):
 	selection[s] = int(selection[s])
@@ -84,16 +82,3 @@ while not found:
 
 print(found)
 print("That took", (end-start)*1000, "milliseconds.")
-bestAnswer = """
-
-
-
-
-
-"""
-
-"""for branch in answerBranches:
-  if len(bestAnswer.splitlines()) > len(branch.equations.splitlines()):
-    bestAnswer = branch.equations
-
-print(bestAnswer)"""
